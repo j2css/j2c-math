@@ -21,7 +21,7 @@ var R = length('2em');
 sheet = j2c.sheet({"@global": {
     ".foo": {
         padding: {
-            left R.add('3em'), // Note that there's no need to convert to String
+            left: R.add('3em'), // Note that there's no need to convert to String
                                // j2c does it for you.
             rigth: R           // still 2em, lengths are immutable.
         }
