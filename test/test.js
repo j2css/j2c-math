@@ -13,17 +13,58 @@ function check(a,b) {expect(a).to.be(b);}
 
 
 
+  //////////////////////////////////
+  /**/  suite('Constructor ');  /**/
+  //////////////////////////////////
+
+  test('With unit', function () {
+    var a = length('1em');
+    check(a.unit, 'em');
+    check(a.num, 1);
+  });
+
+  test('With percent', function () {
+    var a = length('1%');
+    check(a.unit, '%');
+    check(a.num, 1);
+  });
+
+  test('Without unit', function () {
+    var a = length('1', true);
+    check(a.unit, '');
+    check(a.num, 1);
+  });
+
+
+  test('Malformed inputs', function () {
+    expect(function(){length('em');}).to.throwException(function(e){
+        expect(e).to.be.a(TypeError);
+        expect(e.message).to.contain('malformed input');
+      });
+    expect(function(){length('1');}).to.throwException();
+    expect(function(){length(1);}).to.throwException();
+    expect(function(){length('1$');}).to.throwException();
+    expect(function(){length('1em%');}).to.throwException();
+  });
+
+
+  if (Object.freeze) {
+    test('Immutable', function () {
+      var a = length('1em');
+      a.unit  = 'px';
+      check(a.unit, 'em');
+    });
+  }
+
+  test('Identity if another lenght is passed', function () {
+    var a = length('1em');
+    var b = length(a);
+    check(a, b);
+  });
+
   //////////////////////////////////////////
   /**/  suite('toString conversion ');  /**/
   //////////////////////////////////////////
-
-  test('no unit, toString()', function () {
-    check(length('1').toString(), '1');
-  });
-
-  test('no unit, valueOf()', function () {
-    check(length('1') + '', '1');
-  });
 
   test('1em toString()',function () {
     check(length('1em').toString(), '1em');
@@ -46,11 +87,11 @@ function check(a,b) {expect(a).to.be(b);}
   });
 
   test('parse float', function () {
-    check(length('1.1') + '', '1.1');
+    check(length('1.1', true) + '', '1.1');
   });
 
   test('parse float without leading digit', function () {
-    check(length('.1') + '', '0.1');
+    check(length('.1', true) + '', '0.1');
   });
 
   test('parse float with unit', function () {
@@ -67,14 +108,6 @@ function check(a,b) {expect(a).to.be(b);}
   /////////////////////////////////
 
 
-  test('no units, add string', function () {
-    check(length('1').add('1') + '', '2');
-  });
-
-  test('no units, add number', function () {
-    check(length('1').add(1) + '', '2');
-  });
-
   test('1em + 1em', function () {
     check(length('1em').add('1em') + '', '2em');
   });
@@ -84,7 +117,7 @@ function check(a,b) {expect(a).to.be(b);}
       length('1em').add('1');
     }).to.throwException(function (e) { // get the exception object
       expect(e).to.be.a(TypeError);
-      expect(e.message).to.contain('unmatched units');
+      expect(e.message).to.contain('malformed input');
     });
   });
 
@@ -116,14 +149,6 @@ function check(a,b) {expect(a).to.be(b);}
   /**/  suite('Subtractions, ');  /**/
   ////////////////////////////////////
 
-  test('no units, subtract string', function () {
-    check(length('1').sub('1') + '', '0');
-  });
-
-  test('no units, subtract number', function () {
-    check(length('2').sub(1) + '', '1');
-  });
-
   test('2em - 1em', function () {
     check(length('2em').sub('1em') + '', '1em');
   });
@@ -133,7 +158,7 @@ function check(a,b) {expect(a).to.be(b);}
       length('1em').sub('1');
     }).to.throwException(function (e) { // get the exception object
       expect(e).to.be.a(TypeError);
-      expect(e.message).to.contain('unmatched units');
+      expect(e.message).to.contain('malformed input');
     });
   });
 
@@ -165,14 +190,6 @@ function check(a,b) {expect(a).to.be(b);}
   /**/  suite('Multiplications, ');  /**/
   ///////////////////////////////////////
 
-  test('no units, multiply by a string', function () {
-    check(length('1').mul('1') + '', '1');
-  });
-
-  test('no units, multiply with number', function () {
-    check(length('2').mul(1) + '', '2');
-  });
-
   test('2em * 2', function () {
     check(length('2em').mul(2) + '', '4em');
   });
@@ -182,29 +199,19 @@ function check(a,b) {expect(a).to.be(b);}
       length('1em').mul('1em');
     }).to.throwException(function (e) { // get the exception object
       expect(e).to.be.a(TypeError);
-    });
+       expect(e.message).to.contain('scalar operand expected');
+   });
   });
 
 
 
     /////////////////////////////////
-    /*suite('Divisions, ');  /**/
+    /**/  suite('Divisions, ');  /**/
     /////////////////////////////////
 
-
-  test('no units, divide by a string', function () {
-    check(length('6').div('2') + '', '3');
-  });
-
-  test('no units, divide by a number', function () {
-    check(length('6').div(2) + '', '3');
-  });
 
   test('2em / 2', function () {
     check(length('2em').div(2) + '', '1em');
-  });
-  test('2em / length(2)', function () {
-    check(length('2em').div(length(2)) + '', '1em');
   });
 
   test('2em / 1em', function () {

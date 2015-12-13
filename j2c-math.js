@@ -1,6 +1,8 @@
 /** j2c-math Ⓒ Pierre-Yves Gérardy @license MIT*/
-export function length(a) {
+export function length(a, emptyUnit) {
+  if (a instanceof Length) return a;
   a = a.toString().match(/^(\d*\.\d+|\d+)(\%|\w*)$/);
+  if (!a || !a[2] && !emptyUnit) throw new TypeError('malformed input');
   return new Length(a[1] - 0, a[2]);
 }
 
@@ -27,12 +29,12 @@ proto.sub = function(n) {
 
 proto.mul = function(n) {
   n = this.num * n;
-  if (n !== n) throw new TypeError('length.mul expetcs a scalar operand');
+  if (n !== n) throw new TypeError('scalar operand expected');
   return new Length(n, this.unit);
 };
 
 proto.div = function(n) {
-  if (!(n instanceof Length)) n = length(n);
+  if (!(n instanceof Length)) n = length(n, true);
   if (n.unit && this.unit !== n.unit) throw new TypeError("unmatched units: '" + this.unit + "' and '" + n.unit + "'");
   if (n.num == 0) throw new TypeError('division by 0');
   return n.unit ? this.num / n.num : new Length(this.num / n, this.unit);
