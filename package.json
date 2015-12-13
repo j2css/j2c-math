@@ -40,11 +40,9 @@
     "eslint": "^1.10.3",
     "expect.js": "0.3.1",
     "in-publish": "^2.0.0",
-    "jshint": "^2.8.0",
     "mocha": "2.3.2",
     "mocha-lcov-reporter": "0.0.2",
     "rollup": "^0.21.2",
-    "surgicate": "0.0.3",
     "uglify-js": "2.4.24"
   }
 }
