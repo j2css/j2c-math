@@ -2,7 +2,7 @@
 
 [![Join the chat at https://gitter.im/j2css/j2c](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/j2css/j2c?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-A [j2c](http://j2c.py.gy) companion library to do math on CSS lengths like `2em` or `20%`.
+A [j2c](http://j2c.py.gy) companion library to do math on [CSS lengths](https://developer.mozilla.org/en-US/docs/Web/CSS/length) like `2em` or `20%`.
 
 ## Installation
 
@@ -16,42 +16,89 @@ $ npm install --save j2c-math
 import {length} form 'j2c-math';
 import j2c from 'j2c';
 
-var R = length('2em');
+let baseWidth = length('4em');
+let pageWidth = baseWidth.mul(10);        // base * 10, returns a new object.
+let navWidth  = baseWidth.mul(2);         // base * 2
+let mainWidth = pageWidth.sub(navWidth);  // page - side
 
-sheet = j2c.sheet({"@global": {
-    ".foo": {
-        padding: {
-            left: R.add('3em'), // Note that there's no need to convert to String
-                               // j2c does it for you.
-            rigth: R           // still 2em, lengths are immutable.
+// j2c treats these objects as values.
+
+sheet = j2c.sheet({
+    " body": {
+        margin: '0 auto',
+        width: baseWidth,
+
+        " nav": {
+            float: 'left',
+            width: sideWidth
+        },
+        " main": {
+            float: 'left',
+            width: mainWidth
         }
     }
-}})
+})
 ```
 Becomes
 ```CSS
-.foo {
-    padding-left: 5em;
-    padding-right: 2em;
+body {
+    margin: 0 auto;
+    width: 40em;
+}
+body nav{
+    float: left;
+    width: 8em;
+}
+body main{
+    float: left;
+    width: 32em;
 }
 ```
 
-The `length` constructor takes as input:
+### Factory
 
-- strings representing CSS lengths, like `'2em'`, `'3%'`.
-- other `length` objects, which are returned as is.
+```JS
+let len = length('2em') // returns a Length object.
+```
+
+The `length` factory takes as input strings representing CSS lengths, like `'2em'`, `'3%'`. and returns a new `Length` object.
+
+### Methods
 
 The following methods are supported:
 
-- `resultLength = length(aCssLenght).add(anotherLength)` where the units of all lengths are identical.
-- `resultLength = length(aCssLenght).sub(anotherLength)` as above, but subtracts.
-- `resultLength = length(aCssLenght).mul(number)` where number is a JS number, a string that represents a number.
-- `resultLength = length(aCssLenght).div(number)` as the `.mul()`, but divides. Division by 0 throws.
-- `number = length(aCssLenght).div(anotherLength)` units must match. Division by 0 throws.
+##### `len.add(another: length|string) : length`
 
-`anotherLength` can be a `length` object or a string that can be parsed into one.
+If `another` is a string it must represent a length.
 
-`.toString()` and `.valueOf()` return the corresponding length as a string.
+Units must match.
 
+##### `en.sub(another: length|string) : length`
+
+As above.
+
+##### `len.mul(n: number|string) : length` 
+
+If `n` is a string, it must represent a number, not a length.
+
+##### `len.div(n: number|string) : length      `
+
+Likewise.
+
+Division by 0 throws.
+
+##### `len.div(another: length|string) : number`
+
+Units must match.
+
+Division by 0 throws.
+
+##### `len.toString()` and `len.valueOf()` 
+
+Return the corresponding length as a string. `j2c` actually uses `.valueOf()` under the hood to get the String representation.
+
+```JS
+console.log('' + length('6em').div(3)); // '2em'
+```
 
 ## License: MIT
