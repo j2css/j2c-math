@@ -1,0 +1,50 @@
+{
+  "name": "j2clib",
+  "version": "0.0.1",
+  "description": "Manipulates CSS values (colors and measures).",
+  "main": "dist/j2c-math.commonjs.js",
+  "esnext:main": "j2c-math.js",
+  "scripts": {
+    "all": "npm run build && npm run lint && npm run nyan",
+    "build": "npm run -s clean && npm run rollup && npm run uglify && node scripts/filesize.js",
+    "rollup": "node scripts/build.js",
+    "uglify": "uglifyjs dist/j2c-math.commonjs.js -c -m --comments > dist/j2c-math.commonjs.min.js && uglifyjs dist/j2c-math.amd.js -c -m --comments > dist/j2c-math.amd.min.js && uglifyjs dist/j2c-math.global.js -c -m --comments > dist/j2c-math.global.min.js",
+    "clean": "rm -f dist/*.js",
+    "lint": " echo \"linting...\" && eslint --fix j2c-math.js test/test.js script/*.js",
+    "nyan": "mocha --ui qunit --reporter nyan",
+    "test": "mocha --ui qunit",
+    "cover": "mocha --ui qunit --require blanket --reporter mocha-lcov-reporter | coveralls",
+    "prepublish": "(in-publish && npm run -s all && git push --follow-tags) || not-in-publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pygy/j2clib.git"
+  },
+  "keywords": [
+    "CSS"
+  ],
+  "author": "Pierre-Yves Gérardy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pygy/j2clib/issues"
+  },
+  "config": {
+    "blanket": {
+      "pattern": "//j2c-math\\.commonjs/"
+    }
+  },
+  "homepage": "http://j2c.py.gy",
+  "devDependencies": {
+    "blanket": "^1.1.7",
+    "coveralls": "^2.11.2",
+    "eslint": "^1.10.3",
+    "expect.js": "0.3.1",
+    "in-publish": "^2.0.0",
+    "jshint": "^2.8.0",
+    "mocha": "2.3.2",
+    "mocha-lcov-reporter": "0.0.2",
+    "rollup": "^0.21.2",
+    "surgicate": "0.0.3",
+    "uglify-js": "2.4.24"
+  }
+}
