@@ -36,7 +36,7 @@ define(['exports'], function (exports) { 'use strict';
   proto.div = function(n) {
     if (!(n instanceof Length)) n = length(n);
     if (n.unit && this.unit !== n.unit) throw new TypeError("unmatched units: '" + this.unit + "' and '" + n.unit + "'");
-    if (n.num == 0)  throw new TypeError("division by 0")
+    if (n.num == 0) throw new TypeError('division by 0');
     return n.unit ? this.num / n.num : new Length(this.num / n, this.unit);
   };
 
