@@ -3,8 +3,7 @@
 
 A [j2c](http://j2c.py.gy) companion library to do math on [CSS lengths](https://developer.mozilla.org/en-US/docs/Web/CSS/length) like `2em` or `20%`.
 
-[![Join the chat at https://gitter.im/j2css/j2c](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/j2css/j2c?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) <== j2c chat room
-
+[![Join the chat at https://gitter.im/j2css/j2c](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/j2css/j2c?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/j2css/j2c-math.svg?branch=master)](https://travis-ci.org/j2css/j2c-math)
 [![bitHound Overalll Score](https://www.bithound.io/github/j2css/j2c-math/badges/score.svg)](https://www.bithound.io/github/j2css/j2c-math)
 
