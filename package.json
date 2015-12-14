@@ -10,7 +10,7 @@
     "rollup": "node scripts/build.js",
     "uglify": "uglifyjs dist/j2c-math.commonjs.js -c -m --comments > dist/j2c-math.commonjs.min.js && uglifyjs dist/j2c-math.amd.js -c -m --comments > dist/j2c-math.amd.min.js && uglifyjs dist/j2c-math.global.js -c -m --comments > dist/j2c-math.global.min.js",
     "clean": "rm -f dist/*.js",
-    "lint": " echo \"linting...\" && eslint --fix j2c-math.js test/test.js script/*.js",
+    "lint": " echo \"linting...\" && eslint --fix j2c-math.js test/test.js scripts/*.js",
     "nyan": "mocha --ui qunit --reporter nyan",
     "test": "mocha --ui qunit",
     "cover": "(mocha --ui qunit --require blanket --reporter mocha-lcov-reporter | coveralls) || npm run test",
