@@ -18,9 +18,14 @@ module.exports = {
         ],
         "no-trailing-spaces": [2]
     },
+    parserOptions: {
+        ecmaVersion: 6,
+        sourceType: "module"
+    },
     ecmaFeatures: {
         modules: true
     },
+    sourceType: "module",
     env: {
         es6: true,
         node: true,
