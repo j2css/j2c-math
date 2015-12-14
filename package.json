@@ -13,7 +13,7 @@
     "lint": " echo \"linting...\" && eslint --fix j2c-math.js test/test.js script/*.js",
     "nyan": "mocha --ui qunit --reporter nyan",
     "test": "mocha --ui qunit",
-    "cover": "mocha --ui qunit --require blanket --reporter mocha-lcov-reporter | coveralls",
+    "cover": "(mocha --ui qunit --require blanket --reporter mocha-lcov-reporter | coveralls) || npm run test",
     "prepublish": "(in-publish && npm run -s all && git push --follow-tags) || not-in-publish"
   },
   "repository": {
