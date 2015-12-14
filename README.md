@@ -39,7 +39,9 @@ sheet = j2c.sheet({
     }
 })
 ```
+
 Becomes
+
 ```CSS
 body {
     margin: 0 auto;
@@ -61,11 +63,11 @@ body main{
 let len = length('2em') // returns a Length object.
 ```
 
-The `length` factory takes as input strings representing CSS lengths, like `'2em'`, `'3%'`. and returns a new `Length` object.
+The `length` factory takes as input strings representing CSS lengths, like `'2em'`, `'3%'`. and returns a new `Length` object, which is immutable.
 
 ### Methods
 
-The following methods are supported:
+The following methods are supported; they all return a new value:
 
 ##### `len.add(another: length|string) : length`
 
