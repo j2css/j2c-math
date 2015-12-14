@@ -19,13 +19,13 @@
 
   proto.add = function(n) {
     n = (n instanceof Length) ? n : length(n);
-    if (this.unit !== n.unit) throw new TypeError("unmatched units: '" + this.unit + "' and '" + n.unit + "'");
+    if (this.unit !== n.unit) throw new TypeError("mismatched units: '" + this.unit + "' and '" + n.unit + "'");
     return new Length(this.num + n.num, this.unit);
   };
 
   proto.sub = function(n) {
     n = (n instanceof Length) ? n : length(n);
-    if (this.unit !== n.unit) throw new TypeError("unmatched units: '" + this.unit + "' and '" + n.unit + "'");
+    if (this.unit !== n.unit) throw new TypeError("mismatched units: '" + this.unit + "' and '" + n.unit + "'");
     return new Length(this.num - n.num, this.unit);
   };
 
@@ -36,8 +36,8 @@
   };
 
   proto.div = function(n) {
-    if (!(n instanceof Length)) n = length(n, true);
-    if (n.unit && this.unit !== n.unit) throw new TypeError("unmatched units: '" + this.unit + "' and '" + n.unit + "'");
+    n = length(n, true);
+    if (n.unit && this.unit !== n.unit) throw new TypeError("mismatched units: '" + this.unit + "' and '" + n.unit + "'");
     if (n.num == 0) throw new TypeError('division by 0');
     return n.unit ? this.num / n.num : new Length(this.num / n, this.unit);
   };

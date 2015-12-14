@@ -1,5 +1,6 @@
 /*eslint-env node, mocha */
 
+
 var expect = require('expect.js');
 
 function check(a,b) {expect(a).to.be(b);}
@@ -12,10 +13,9 @@ function check(a,b) {expect(a).to.be(b);}
 
 
 
-
-  //////////////////////////////////
-  /**/  suite('Constructor ');  /**/
-  //////////////////////////////////
+  ///////////////////////////////////
+  /**/  suite('Constructor, ');  /**/
+  ///////////////////////////////////
 
   test('With unit', function () {
     var a = length('1em');
@@ -29,18 +29,11 @@ function check(a,b) {expect(a).to.be(b);}
     check(a.num, 1);
   });
 
-  test('Without unit', function () {
-    var a = length('1', true);
-    check(a.unit, '');
-    check(a.num, 1);
-  });
-
-
   test('Malformed inputs', function () {
     expect(function(){length('em');}).to.throwException(function(e){
-        expect(e).to.be.a(TypeError);
-        expect(e.message).to.contain('malformed input');
-      });
+      expect(e).to.be.a(TypeError);
+      expect(e.message).to.contain('malformed input');
+    });
     expect(function(){length('1');}).to.throwException();
     expect(function(){length(1);}).to.throwException();
     expect(function(){length('1$');}).to.throwException();
@@ -62,9 +55,11 @@ function check(a,b) {expect(a).to.be(b);}
     check(a, b);
   });
 
-  //////////////////////////////////////////
-  /**/  suite('toString conversion ');  /**/
-  //////////////////////////////////////////
+
+
+  ///////////////////////////////////////////
+  /**/  suite('toString conversion, ');  /**/
+  ///////////////////////////////////////////
 
   test('1em toString()',function () {
     check(length('1em').toString(), '1em');
@@ -86,14 +81,6 @@ function check(a,b) {expect(a).to.be(b);}
     check(length('0%') + '', '0');
   });
 
-  test('parse float', function () {
-    check(length('1.1', true) + '', '1.1');
-  });
-
-  test('parse float without leading digit', function () {
-    check(length('.1', true) + '', '0.1');
-  });
-
   test('parse float with unit', function () {
     check(length('1.1px') + '', '1.1px');
   });
@@ -103,10 +90,10 @@ function check(a,b) {expect(a).to.be(b);}
   });
 
 
+
   /////////////////////////////////
   /**/  suite('Additions, ');  /**/
   /////////////////////////////////
-
 
   test('1em + 1em', function () {
     check(length('1em').add('1em') + '', '2em');
@@ -126,7 +113,7 @@ function check(a,b) {expect(a).to.be(b);}
       length('1em').add('1px');
     }).to.throwException(function (e) { // get the exception object
       expect(e).to.be.a(TypeError);
-      expect(e.message).to.contain('unmatched units');
+      expect(e.message).to.contain('mismatched units');
     });
   });
 
@@ -167,7 +154,7 @@ function check(a,b) {expect(a).to.be(b);}
       length('1em').sub('1px');
     }).to.throwException(function (e) { // get the exception object
       expect(e).to.be.a(TypeError);
-      expect(e.message).to.contain('unmatched units');
+      expect(e.message).to.contain('mismatched units');
     });
   });
 
@@ -199,16 +186,15 @@ function check(a,b) {expect(a).to.be(b);}
       length('1em').mul('1em');
     }).to.throwException(function (e) { // get the exception object
       expect(e).to.be.a(TypeError);
-       expect(e.message).to.contain('scalar operand expected');
-   });
+      expect(e.message).to.contain('scalar operand expected');
+    });
   });
 
 
 
-    /////////////////////////////////
-    /**/  suite('Divisions, ');  /**/
-    /////////////////////////////////
-
+  /////////////////////////////////
+  /**/  suite('Divisions, ');  /**/
+  /////////////////////////////////
 
   test('2em / 2', function () {
     check(length('2em').div(2) + '', '1em');
@@ -230,7 +216,3 @@ function check(a,b) {expect(a).to.be(b);}
     });
   });
 });
-
-
-
-
