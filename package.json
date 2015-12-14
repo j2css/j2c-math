@@ -1,6 +1,6 @@
 {
   "name": "j2c-math",
-  "version": "1.0.0-pre.9",
+  "version": "1.0.0-pre.10",
   "description": "Manipulates CSS values (colors and measures).",
   "main": "dist/j2c-math.commonjs.js",
   "esnext:main": "j2c-math.js",
